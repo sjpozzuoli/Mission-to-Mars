@@ -124,38 +124,34 @@ def hemispheres(browser):
     image_count = len(image_soup.select('div.item'))
 
     # for loop over each picture
-    try:
-        for i in range(image_count):
-            # Create an empty dict to hold the search results
-            hemispheres = {}
+    for i in range(image_count):
+        # Create an empty dict to hold the search results
+        hemispheres = {}
     
-            # Get link to picture
-            image_link = image_soup.select('div.description a')[i].get('href')
-            browser.visit(f'https://marshemispheres.com/{image_link}')
+        # Get link to picture
+        image_link = image_soup.select('div.description a')[i].get('href')
+        browser.visit(f'https://marshemispheres.com/{image_link}')
     
-            # Parse the new html page
-            html = browser.html
-            hemisphere_image_soup = soup(html, 'html.parser')
+        # Parse the new html page
+        html = browser.html
+        hemisphere_image_soup = soup(html, 'html.parser')
     
-            # Get the full image link
-            image_url = hemisphere_image_soup.select_one("div.downloads ul li a").get('href')
+        # Get the full image link
+        image_url = hemisphere_image_soup.select_one("div.downloads ul li a").get('href')
     
-            # Get the full image title
-            image_title = hemisphere_image_soup.select_one("h2.title").get_text()
+        # Get the full image title
+        image_title = hemisphere_image_soup.select_one("h2.title").get_text()
     
-            # Add results to hemipsheres dictionary
-            hemispheres = {
-                'img_url': url + image_url,
-                'title': image_title}
+        # Add results to hemipsheres dictionary
+        hemispheres = {
+            'img_url': url + image_url,
+            'title': image_title}
     
-            # Append results dict to hemisphere image urls list
-            hemisphere_image_urls.append(hemispheres)
+        # Append results dict to hemisphere image urls list
+        hemisphere_image_urls.append(hemispheres)
     
-            # Return to main page
-            browser.back()
-
-    except AttributeError:
-        return None
+        # Return to main page
+        browser.back()
 
 if __name__ == "__main__":
 
